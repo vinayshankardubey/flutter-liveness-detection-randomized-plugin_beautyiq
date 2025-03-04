@@ -62,30 +62,31 @@ class _HomeViewState extends State<HomeView> {
                 final String? response =
                     await FlutterLivenessDetectionRandomizedPlugin.instance
                         .livenessDetection(
-                  showCurrentStep: true,
                   context: context,
-                  shuffleListWithSmileLast: false,
-                  isEnableSnackBar: true,
-                  isDarkMode: false,
                   config: LivenessDetectionConfig(
-                    startWithInfoScreen: true,
                     durationLivenessVerify: 45,
-                    showDurationUiText: true,
+                    showDurationUiText: false,
+                    startWithInfoScreen: true,
+                    useCustomizedLabel: false,
+                    customizedLabel: LivenessDetectionLabelModel(
+                      blink: 'Berkedip',
+                      lookDown: 'Tengok bawah',
+                      lookLeft: 'Tengok kiri',
+                      lookRight: 'Tengok kanan',
+                      lookUp: 'Tengok atas',
+                      smile: 'Senyum',
+                    ),
                   ),
-                      startWithInfoScreen: true,
-                      useCustomizedLabel: true,
-                      customizedLabel: LivenessDetectionLabelModel(
-                        blink: 'Berkedip',
-                        lookDown: 'Tengok bawah',
-                        lookLeft: 'Tengok kiri',
-                        lookRight: 'Tengok kanan',
-                        lookUp: 'Tengok atas',
-                        smile: 'Senyum',
-                      )),
+                  isEnableSnackBar: true,
+                  shuffleListWithSmileLast: true,
+                  isDarkMode: false,
+                  showCurrentStep: true,
                 );
-                setState(() {
-                  imgPath = response;
-                });
+                if (mounted) {
+                  setState(() {
+                    imgPath = response;
+                  });
+                }
               },
               label: const Text('Liveness Detection System')),
         ],
