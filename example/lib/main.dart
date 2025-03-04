@@ -64,10 +64,11 @@ class _HomeViewState extends State<HomeView> {
                         .livenessDetection(
                   context: context,
                   config: LivenessDetectionConfig(
-                    durationLivenessVerify: 45,
-                    showDurationUiText: false,
+                    durationLivenessVerify:
+                        60, // default duration value is 45 second
+                    showDurationUiText: true,
                     startWithInfoScreen: true,
-                    useCustomizedLabel: false,
+                    useCustomizedLabel: true,
                     customizedLabel: LivenessDetectionLabelModel(
                       blink: 'Berkedip',
                       lookDown: 'Tengok bawah',

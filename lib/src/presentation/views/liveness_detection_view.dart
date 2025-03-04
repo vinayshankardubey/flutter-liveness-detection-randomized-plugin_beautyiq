@@ -377,6 +377,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
         _isInfoStepCompleted
             ? _buildDetectionBody()
             : LivenessDetectionTutorialScreen(
+                duration: widget.config.durationLivenessVerify ?? 45,
                 isDarkMode: widget.isDarkMode,
                 onStartTap: () {
                   if (mounted) setState(() => _isInfoStepCompleted = true);
