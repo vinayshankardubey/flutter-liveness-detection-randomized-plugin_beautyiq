@@ -69,6 +69,8 @@ class _HomeViewState extends State<HomeView> {
                   isDarkMode: false,
                   config: LivenessDetectionConfig(
                     startWithInfoScreen: true,
+                    durationLivenessVerify: 45,
+                    showDurationUiText: true,
                   ),
                 );
                 setState(() {
