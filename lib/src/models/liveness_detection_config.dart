@@ -2,11 +2,16 @@ import 'package:flutter_liveness_detection_randomized_plugin/src/models/liveness
 
 class LivenessDetectionConfig {
   final bool startWithInfoScreen;
+  final int? durationLivenessVerify;
+  final bool showDurationUiText;
   final bool useCustomizedLabel;
   final LivenessDetectionLabelModel? customizedLabel;
 
-  LivenessDetectionConfig(
-      {this.startWithInfoScreen = false,
-      this.useCustomizedLabel = false,
-      this.customizedLabel});
+  LivenessDetectionConfig({
+    this.startWithInfoScreen = false,
+    this.durationLivenessVerify = 45,
+    this.showDurationUiText = false,
+    this.useCustomizedLabel = false,
+    this.customizedLabel
+  });
 }

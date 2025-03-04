@@ -68,6 +68,10 @@ class _HomeViewState extends State<HomeView> {
                   isEnableSnackBar: true,
                   isDarkMode: false,
                   config: LivenessDetectionConfig(
+                    startWithInfoScreen: true,
+                    durationLivenessVerify: 45,
+                    showDurationUiText: true,
+                  ),
                       startWithInfoScreen: true,
                       useCustomizedLabel: true,
                       customizedLabel: LivenessDetectionLabelModel(

@@ -171,7 +171,8 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
   }
 
   void _startFaceDetectionTimer() {
-    _timerToDetectFace = Timer(const Duration(seconds: 45),
+    _timerToDetectFace = Timer(
+        Duration(seconds: widget.config.durationLivenessVerify ?? 45),
         () => _onDetectionCompleted(imgToReturn: null));
   }
 
@@ -318,7 +319,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     if (widget.isEnableSnackBar) {
       final snackBar = SnackBar(
         content: Text(imgToReturn == null
-            ? 'Verification of liveness detection failed, please try again. (Exceeds time limit 45 second.)'
+            ? 'Verification of liveness detection failed, please try again. (Exceeds time limit ${widget.config.durationLivenessVerify ?? 45} second.)'
             : 'Verification of liveness detection success!'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -404,6 +405,8 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
           color: widget.isDarkMode ? Colors.black : Colors.white,
         ),
         LivenessDetectionStepOverlayWidget(
+          duration: widget.config.durationLivenessVerify,
+          showDurationUiText: widget.config.showDurationUiText,
           isDarkMode: widget.isDarkMode,
           isFaceDetected: _faceDetectedState,
           camera: CameraPreview(_cameraController!),
