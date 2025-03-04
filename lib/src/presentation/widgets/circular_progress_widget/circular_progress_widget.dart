@@ -55,12 +55,20 @@ class _CircularProgressWidgetState extends State<CircularProgressWidget>
         curve: widget.curve,
       ),
     )..addListener(() {
-        setState(() {
-          _current = _animation!.value;
-        });
+        if (mounted) {
+          setState(() {
+            _current = _animation!.value;
+          });
+        }
       });
 
     _animationController!.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -85,7 +93,9 @@ class _CircularProgressWidgetState extends State<CircularProgressWidget>
   }
 
   _updateProgress() {
-    setState(() => _current = widget.current);
+    if (mounted) {
+      setState(() => _current = widget.current);
+    }
   }
 
   @override

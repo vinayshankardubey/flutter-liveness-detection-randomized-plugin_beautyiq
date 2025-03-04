@@ -3,8 +3,12 @@ import 'package:flutter_liveness_detection_randomized_plugin/index.dart';
 class LivenessDetectionTutorialScreen extends StatefulWidget {
   final VoidCallback onStartTap;
   final bool isDarkMode;
+  final int? duration;
   const LivenessDetectionTutorialScreen(
-      {super.key, required this.onStartTap, this.isDarkMode = false});
+      {super.key,
+      required this.onStartTap,
+      this.isDarkMode = false,
+      required this.duration});
 
   @override
   State<LivenessDetectionTutorialScreen> createState() =>
@@ -120,7 +124,7 @@ class _LivenessDetectionTutorialScreenState
                               widget.isDarkMode ? Colors.white : Colors.black),
                     ),
                     subtitle: Text(
-                      "The time limit given for the liveness detection system verification process is 45 seconds",
+                      "The time limit given for the liveness detection system verification process is ${widget.duration ?? 45} seconds",
                       style: TextStyle(
                           color:
                               widget.isDarkMode ? Colors.white : Colors.black),
@@ -172,7 +176,7 @@ class _LivenessDetectionTutorialScreenState
                   width: 10,
                 ),
                 Text(
-                  'Package Version: 1.0.3',
+                  'Package Version: 1.0.4',
                   style: TextStyle(color: Colors.grey),
                 )
               ],

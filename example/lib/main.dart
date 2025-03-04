@@ -62,18 +62,33 @@ class _HomeViewState extends State<HomeView> {
                 final String? response =
                     await FlutterLivenessDetectionRandomizedPlugin.instance
                         .livenessDetection(
-                  showCurrentStep: true,
                   context: context,
-                  shuffleListWithSmileLast: false,
-                  isEnableSnackBar: true,
-                  isDarkMode: false,
                   config: LivenessDetectionConfig(
+                    durationLivenessVerify:
+                        60, // default duration value is 45 second
+                    showDurationUiText: true,
                     startWithInfoScreen: true,
+                    useCustomizedLabel: true,
+                    // provide an empty string if you want to pass the liveness challenge
+                    customizedLabel: LivenessDetectionLabelModel(
+                      blink: 'Berkedip',
+                      lookDown: 'Tengok bawah',
+                      lookLeft: 'Tengok kiri',
+                      lookRight: 'Tengok kanan',
+                      lookUp: 'Tengok atas',
+                      smile: 'Senyum',
+                    ),
                   ),
+                  isEnableSnackBar: true,
+                  shuffleListWithSmileLast: true,
+                  isDarkMode: false,
+                  showCurrentStep: true,
                 );
-                setState(() {
-                  imgPath = response;
-                });
+                if (mounted) {
+                  setState(() {
+                    imgPath = response;
+                  });
+                }
               },
               label: const Text('Liveness Detection System')),
         ],

@@ -10,16 +10,19 @@ class LivenessDetectionStepOverlayWidget extends StatefulWidget {
   final bool isFaceDetected;
   final bool showCurrentStep;
   final bool isDarkMode;
+  final bool showDurationUiText;
+  final int? duration;
 
-  const LivenessDetectionStepOverlayWidget({
-    super.key,
-    required this.steps,
-    required this.onCompleted,
-    required this.camera,
-    required this.isFaceDetected,
-    this.showCurrentStep = false,
-    this.isDarkMode = true,
-  });
+  const LivenessDetectionStepOverlayWidget(
+      {super.key,
+      required this.steps,
+      required this.onCompleted,
+      required this.camera,
+      required this.isFaceDetected,
+      this.showCurrentStep = false,
+      this.isDarkMode = true,
+      this.showDurationUiText = false,
+      this.duration});
 
   @override
   State<LivenessDetectionStepOverlayWidget> createState() =>
@@ -36,9 +39,16 @@ class LivenessDetectionStepOverlayWidgetState
   late final PageController _pageController;
   late CircularProgressWidget _circularProgressWidget;
 
+  // Add timer and remaining duration variables
+  Timer? _countdownTimer;
+  int _remainingDuration = 0;
+
   static const double _indicatorMaxStep = 100;
-  static const double _stepIncrement = 16.67;
   static const double _heightLine = 25;
+
+  double _getStepIncrement(int stepLength) {
+    return 100 / stepLength;
+  }
 
   String get stepCounter => "$_currentIndex/${widget.steps.length}";
 
@@ -46,12 +56,32 @@ class LivenessDetectionStepOverlayWidgetState
   void initState() {
     super.initState();
     _initializeControllers();
-    print('showCurrentStep ${widget.showCurrentStep}');
+    _initializeTimer();
+    debugPrint('showCurrentStep ${widget.showCurrentStep}');
   }
 
   void _initializeControllers() {
     _pageController = PageController(initialPage: 0);
     _circularProgressWidget = _buildCircularIndicator();
+  }
+
+  void _initializeTimer() {
+    if (widget.duration != null && widget.showDurationUiText) {
+      _remainingDuration = widget.duration!;
+      _startCountdownTimer();
+    }
+  }
+
+  void _startCountdownTimer() {
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_remainingDuration > 0) {
+        setState(() {
+          _remainingDuration--;
+        });
+      } else {
+        _countdownTimer?.cancel();
+      }
+    });
   }
 
   CircularProgressWidget _buildCircularIndicator() {
@@ -68,6 +98,7 @@ class LivenessDetectionStepOverlayWidgetState
   @override
   void dispose() {
     _pageController.dispose();
+    _countdownTimer?.cancel();
     super.dispose();
   }
 
@@ -100,24 +131,33 @@ class LivenessDetectionStepOverlayWidgetState
   }
 
   void _updateState() {
-    setState(() {
-      _currentIndex++;
-      _currentStepIndicator += _stepIncrement;
-      _circularProgressWidget = _buildCircularIndicator();
-    });
+    if (mounted) {
+      setState(() {
+        _currentIndex++;
+        _currentStepIndicator += _getStepIncrement(widget.steps.length);
+        _circularProgressWidget = _buildCircularIndicator();
+      });
+    }
   }
 
   void reset() {
     _pageController.jumpToPage(0);
-    setState(() {
-      _currentIndex = 0;
-      _currentStepIndicator = 0;
-      _circularProgressWidget = _buildCircularIndicator();
-    });
+    if (mounted) {
+      setState(() {
+        _currentIndex = 0;
+        _currentStepIndicator = 0;
+        _circularProgressWidget = _buildCircularIndicator();
+      });
+    }
   }
 
-  void _showLoader() => setState(() => _isLoading = true);
-  void _hideLoader() => setState(() => _isLoading = false);
+  void _showLoader() {
+    if (mounted) setState(() => _isLoading = true);
+  }
+
+  void _hideLoader() {
+    if (mounted) setState(() => _isLoading = false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +182,19 @@ class LivenessDetectionStepOverlayWidgetState
                               color: widget.isDarkMode
                                   ? Colors.white
                                   : Colors.black),
+                        ),
+                        Visibility(
+                          replacement: const SizedBox.shrink(),
+                          visible: widget.showDurationUiText,
+                          child: Text(
+                            _getRemainingTimeText(_remainingDuration),
+                            style: TextStyle(
+                              color: widget.isDarkMode
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                         Text(
                           stepCounter,
@@ -190,6 +243,12 @@ class LivenessDetectionStepOverlayWidgetState
         child: _circularProgressWidget,
       ),
     );
+  }
+
+  String _getRemainingTimeText(int duration) {
+    int minutes = duration ~/ 60;
+    int seconds = duration % 60;
+    return "${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
   }
 
   Widget _buildFaceDetectionStatus() {
