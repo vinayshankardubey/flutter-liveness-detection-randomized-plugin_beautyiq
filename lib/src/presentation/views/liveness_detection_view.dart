@@ -305,7 +305,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
         _isInfoStepCompleted
             ? _buildDetectionBody()
             : LivenessDetectionTutorialScreen(
-               isDarkMode: widget.isDarkMode,
+                isDarkMode: widget.isDarkMode,
                 onStartTap: () {
                   if (mounted) setState(() => _isInfoStepCompleted = true);
                   _startLiveFeed();
@@ -370,14 +370,26 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     required Face face,
     required LivenessDetectionStep step,
   }) async {
-    final headTurnThreshold = FlutterLivenessDetectionRandomizedPlugin
-            .instance.thresholdConfig
-            .firstWhereOrNull((p0) => p0 is LivenessThresholdHead)
-        as LivenessThresholdHead?;
-    if ((face.headEulerAngleY ?? 0) <
-        (headTurnThreshold?.rotationAngle ?? -30)) {
-      _startProcessing();
-      await _completeStep(step: step);
+    if (Platform.isAndroid) {
+      final headTurnThreshold = FlutterLivenessDetectionRandomizedPlugin
+              .instance.thresholdConfig
+              .firstWhereOrNull((p0) => p0 is LivenessThresholdHead)
+          as LivenessThresholdHead?;
+      if ((face.headEulerAngleY ?? 0) <
+          (headTurnThreshold?.rotationAngle ?? -30)) {
+        _startProcessing();
+        await _completeStep(step: step);
+      }
+    } else if (Platform.isIOS) {
+      final headTurnThreshold = FlutterLivenessDetectionRandomizedPlugin
+              .instance.thresholdConfig
+              .firstWhereOrNull((p0) => p0 is LivenessThresholdHead)
+          as LivenessThresholdHead?;
+      if ((face.headEulerAngleY ?? 0) >
+          (headTurnThreshold?.rotationAngle ?? 30)) {
+        _startProcessing();
+        await _completeStep(step: step);
+      }
     }
   }
 
@@ -385,14 +397,26 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     required Face face,
     required LivenessDetectionStep step,
   }) async {
-    final headTurnThreshold = FlutterLivenessDetectionRandomizedPlugin
-            .instance.thresholdConfig
-            .firstWhereOrNull((p0) => p0 is LivenessThresholdHead)
-        as LivenessThresholdHead?;
-    if ((face.headEulerAngleY ?? 0) >
-        (headTurnThreshold?.rotationAngle ?? 30)) {
-      _startProcessing();
-      await _completeStep(step: step);
+    if (Platform.isAndroid) {
+      final headTurnThreshold = FlutterLivenessDetectionRandomizedPlugin
+              .instance.thresholdConfig
+              .firstWhereOrNull((p0) => p0 is LivenessThresholdHead)
+          as LivenessThresholdHead?;
+      if ((face.headEulerAngleY ?? 0) >
+          (headTurnThreshold?.rotationAngle ?? 30)) {
+        _startProcessing();
+        await _completeStep(step: step);
+      }
+    } else if (Platform.isIOS) {
+      final headTurnThreshold = FlutterLivenessDetectionRandomizedPlugin
+              .instance.thresholdConfig
+              .firstWhereOrNull((p0) => p0 is LivenessThresholdHead)
+          as LivenessThresholdHead?;
+      if ((face.headEulerAngleY ?? 0) <
+          (headTurnThreshold?.rotationAngle ?? -30)) {
+        _startProcessing();
+        await _completeStep(step: step);
+      }
     }
   }
 
