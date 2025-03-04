@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_liveness_detection_randomized_plugin/index.dart';
 import 'package:flutter_liveness_detection_randomized_plugin/src/presentation/widgets/circular_progress_widget/circular_progress_widget.dart';
 import 'package:lottie/lottie.dart';
-import 'dart:async';
 
 class LivenessDetectionStepOverlayWidget extends StatefulWidget {
   final List<LivenessDetectionStepItem> steps;
@@ -45,8 +44,11 @@ class LivenessDetectionStepOverlayWidgetState
   int _remainingDuration = 0;
 
   static const double _indicatorMaxStep = 100;
-  static const double _stepIncrement = 16.67;
   static const double _heightLine = 25;
+
+  double _getStepIncrement(int stepLength) {
+    return 100 / stepLength;
+  }
 
   String get stepCounter => "$_currentIndex/${widget.steps.length}";
 
@@ -132,7 +134,7 @@ class LivenessDetectionStepOverlayWidgetState
     if (mounted) {
       setState(() {
         _currentIndex++;
-        _currentStepIndicator += _stepIncrement;
+        _currentStepIndicator += _getStepIncrement(widget.steps.length);
         _circularProgressWidget = _buildCircularIndicator();
       });
     }

@@ -72,35 +72,47 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
   List<LivenessDetectionStepItem> customizedLivenessLabel(
       LivenessDetectionLabelModel label) {
     List<LivenessDetectionStepItem> customizedSteps = [];
-    customizedSteps.add(LivenessDetectionStepItem(
-      step: LivenessDetectionStep.blink,
-      title: label.blink ?? "Blink 2-3 Times",
-    ));
+    if (label.blink != "") {
+      customizedSteps.add(LivenessDetectionStepItem(
+        step: LivenessDetectionStep.blink,
+        title: label.blink ?? "Blink 2-3 Times",
+      ));
+    }
 
-    customizedSteps.add(LivenessDetectionStepItem(
-      step: LivenessDetectionStep.lookRight,
-      title: label.lookRight ?? "Look Right",
-    ));
+    if (label.lookRight != "") {
+      customizedSteps.add(LivenessDetectionStepItem(
+        step: LivenessDetectionStep.lookRight,
+        title: label.lookRight ?? "Look Right",
+      ));
+    }
 
-    customizedSteps.add(LivenessDetectionStepItem(
-      step: LivenessDetectionStep.lookLeft,
-      title: label.lookLeft ?? "Look Left",
-    ));
+    if (label.lookLeft != "") {
+      customizedSteps.add(LivenessDetectionStepItem(
+        step: LivenessDetectionStep.lookLeft,
+        title: label.lookLeft ?? "Look Left",
+      ));
+    }
 
-    customizedSteps.add(LivenessDetectionStepItem(
-      step: LivenessDetectionStep.lookUp,
-      title: label.lookUp ?? "Look Up",
-    ));
+    if (label.lookUp != "") {
+      customizedSteps.add(LivenessDetectionStepItem(
+        step: LivenessDetectionStep.lookUp,
+        title: label.lookUp ?? "Look Up",
+      ));
+    }
 
-    customizedSteps.add(LivenessDetectionStepItem(
-      step: LivenessDetectionStep.lookDown,
-      title: label.lookDown ?? "Look Down",
-    ));
+    if (label.lookDown != "") {
+      customizedSteps.add(LivenessDetectionStepItem(
+        step: LivenessDetectionStep.lookDown,
+        title: label.lookDown ?? "Look Down",
+      ));
+    }
 
-    customizedSteps.add(LivenessDetectionStepItem(
-      step: LivenessDetectionStep.smile,
-      title: label.smile ?? "Smile",
-    ));
+    if (label.smile != "") {
+      customizedSteps.add(LivenessDetectionStepItem(
+        step: LivenessDetectionStep.smile,
+        title: label.smile ?? "Smile",
+      ));
+    }
 
     return customizedSteps;
   }

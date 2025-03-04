@@ -69,6 +69,7 @@ class _HomeViewState extends State<HomeView> {
                     showDurationUiText: true,
                     startWithInfoScreen: true,
                     useCustomizedLabel: true,
+                    // provide an empty string if you want to pass the liveness challenge
                     customizedLabel: LivenessDetectionLabelModel(
                       blink: 'Berkedip',
                       lookDown: 'Tengok bawah',
