@@ -69,7 +69,19 @@ class _HomeViewState extends State<HomeView> {
                   isDarkMode: false,
                   config: LivenessDetectionConfig(
                     startWithInfoScreen: true,
+                    durationLivenessVerify: 45,
+                    showDurationUiText: true,
                   ),
+                      startWithInfoScreen: true,
+                      useCustomizedLabel: true,
+                      customizedLabel: LivenessDetectionLabelModel(
+                        blink: 'Berkedip',
+                        lookDown: 'Tengok bawah',
+                        lookLeft: 'Tengok kiri',
+                        lookRight: 'Tengok kanan',
+                        lookUp: 'Tengok atas',
+                        smile: 'Senyum',
+                      )),
                 );
                 setState(() {
                   imgPath = response;
