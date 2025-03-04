@@ -223,9 +223,9 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
         inputImage.metadata?.rotation != null) {
       if (faces.isEmpty) {
         _resetSteps();
-        setState(() => _faceDetectedState = false);
+        if (mounted) setState(() => _faceDetectedState = false);
       } else {
-        setState(() => _faceDetectedState = true);
+        if (mounted) setState(() => _faceDetectedState = true);
         final currentIndex = _stepsKey.currentState?.currentIndex ?? 0;
         if (widget.config.useCustomizedLabel) {
           if (currentIndex <
@@ -299,7 +299,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     try {
       if (_cameraController == null || _isTakingPicture) return;
 
-      setState(() => _isTakingPicture = true);
+      if (mounted) setState(() => _isTakingPicture = true);
       await _cameraController?.stopImageStream();
 
       final XFile? clickedImage = await _cameraController?.takePicture();
@@ -355,12 +355,12 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
 
   void _startProcessing() {
     if (!mounted) return;
-    setState(() => _isProcessingStep = true);
+    if (mounted) setState(() => _isProcessingStep = true);
   }
 
   void _stopProcessing() {
     if (!mounted) return;
-    setState(() => _isProcessingStep = false);
+    if (mounted) setState(() => _isProcessingStep = false);
   }
 
   @override
