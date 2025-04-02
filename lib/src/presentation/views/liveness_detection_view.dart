@@ -114,6 +114,8 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       ));
     }
 
+    customizedSteps.shuffle();
+
     return customizedSteps;
   }
 

@@ -71,12 +71,13 @@ class _HomeViewState extends State<HomeView> {
                     useCustomizedLabel: true,
                     // provide an empty string if you want to pass the liveness challenge
                     customizedLabel: LivenessDetectionLabelModel(
-                      blink: 'Berkedip',
-                      lookDown: 'Tengok bawah',
-                      lookLeft: 'Tengok kiri',
-                      lookRight: 'Tengok kanan',
+                      blink:
+                          '', // add empty string to skip this liveness challenge
+                      lookDown: '',
+                      lookLeft: '',
+                      lookRight: '',
                       lookUp: 'Tengok atas',
-                      smile: 'Senyum',
+                      smile: null, // add null value to give default label name
                     ),
                   ),
                   isEnableSnackBar: true,

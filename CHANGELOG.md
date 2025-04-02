@@ -1,3 +1,8 @@
+## 1.0.5 🚀
+
+- 🛠️ Improve security liveness challenge
+- 🛠️ Update readme.md
+
 ## 1.0.4 🚀
 
 - ⚡ Improved performance during liveness challenge verification
