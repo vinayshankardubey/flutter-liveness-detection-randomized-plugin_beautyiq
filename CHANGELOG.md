@@ -1,6 +1,7 @@
 ## 1.0.5 🚀
 
 - 🛠️ Improve security liveness challenge
+- 🎨 Add set to max brightness option
 - 🛠️ Update readme.md
 
 ## 1.0.4 🚀
