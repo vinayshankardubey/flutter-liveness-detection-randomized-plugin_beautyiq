@@ -6,12 +6,14 @@ class LivenessDetectionConfig {
   final bool showDurationUiText;
   final bool useCustomizedLabel;
   final LivenessDetectionLabelModel? customizedLabel;
+  final bool isEnableMaxBrightness;
 
   LivenessDetectionConfig({
     this.startWithInfoScreen = false,
     this.durationLivenessVerify = 45,
     this.showDurationUiText = false,
     this.useCustomizedLabel = false,
-    this.customizedLabel
+    this.customizedLabel,
+    this.isEnableMaxBrightness = true
   });
 }
