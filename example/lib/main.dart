@@ -80,7 +80,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
                   isEnableSnackBar: true, // snackbar to notify either liveness is success or failed
-                  shuffleListWithSmileLast: true, // put 'smile' challenge always at the end of liveness challenge
+                  shuffleListWithSmileLast: true, // put 'smile' challenge always at the end of liveness challenge, if `useCustomizedLabel` is true, this automatically set to false
                   isDarkMode: false, // enable dark/light mode
                   showCurrentStep: true, // show number current step of liveness
                 );
