@@ -64,6 +64,7 @@ class _HomeViewState extends State<HomeView> {
                         .livenessDetection(
                   context: context,
                   config: LivenessDetectionConfig(
+                    isEnableMaxBrightness: true,
                     durationLivenessVerify:
                         60, // default duration value is 45 second
                     showDurationUiText: true,
@@ -71,9 +72,9 @@ class _HomeViewState extends State<HomeView> {
                     useCustomizedLabel: true,
                     // provide an empty string if you want to pass the liveness challenge
                     customizedLabel: LivenessDetectionLabelModel(
-                      blink: 'Berkedip',
-                      lookDown: 'Tengok bawah',
-                      lookLeft: 'Tengok kiri',
+                      blink: '',
+                      lookDown: '',
+                      lookLeft: null,
                       lookRight: 'Tengok kanan',
                       lookUp: 'Tengok atas',
                       smile: 'Senyum',

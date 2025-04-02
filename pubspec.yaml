@@ -18,6 +18,7 @@ dependencies:
   image: ^4.0.15
   lottie: ^2.4.0
   collection: ^1.18.0
+  screen_brightness: ^2.1.2
 
 dependency_overrides:
   camera_android_camerax: 0.6.10+1
