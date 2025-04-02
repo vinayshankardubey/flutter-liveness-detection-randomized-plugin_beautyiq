@@ -35,13 +35,15 @@ dependencies:
 ## Customized Steps Label
 You can customized steps label or use certain step only of liveness challenge with this example :
 ```
+config: LivenessDetectionConfig(
 customizedLabel: LivenessDetectionLabelModel(
-blink: 'Berkedip',
-lookDown: '', // add empty string to skip this liveness challenge
-lookLeft: 'Tengok kiri',
-lookRight: 'Tengok kanan',
-lookUp: 'Tengok atas',
-smile: null, // add null value to give default label name
+  blink: '', // add empty string to skip/pass this liveness challenge
+  lookDown: '',
+  lookLeft: '',
+  lookRight: '',
+  lookUp: 'Tengok Atas', // example of customize label name for liveness challenge. it will replace default 'look up'
+  smile: null, // null value to use default label name
+),
 ),
 ```
 
