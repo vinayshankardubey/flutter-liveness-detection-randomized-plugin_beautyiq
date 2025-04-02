@@ -64,6 +64,7 @@ class _HomeViewState extends State<HomeView> {
                         .livenessDetection(
                   context: context,
                   config: LivenessDetectionConfig(
+                    isEnableMaxBrightness: true, // enable disable max brightness when taking face photo
                     durationLivenessVerify: 60, // default duration value is 45 second
                     showDurationUiText: false, // show or hide duration remaining when perfoming liveness detection
                     startWithInfoScreen: true, // show or hide tutorial screen

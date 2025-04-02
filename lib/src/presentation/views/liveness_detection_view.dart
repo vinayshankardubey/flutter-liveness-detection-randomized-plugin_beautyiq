@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_liveness_detection_randomized_plugin/index.dart';
 import 'package:flutter_liveness_detection_randomized_plugin/src/core/constants/liveness_detection_step_constant.dart';
 import 'package:collection/collection.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 
 List<CameraDescription> availableCams = [];
 
@@ -40,6 +41,24 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
   bool _faceDetectedState = false;
   static late List<LivenessDetectionStepItem> _cachedShuffledSteps;
   static bool _isShuffled = false;
+
+  // Brightness Screen
+  Future<void> setApplicationBrightness(double brightness) async {
+    try {
+      await ScreenBrightness.instance
+          .setApplicationScreenBrightness(brightness);
+    } catch (e) {
+      throw 'Failed to set application brightness';
+    }
+  }
+
+  Future<void> resetApplicationBrightness() async {
+    try {
+      await ScreenBrightness.instance.resetApplicationScreenBrightness();
+    } catch (e) {
+      throw 'Failed to reset application brightness';
+    }
+  }
 
   // Steps related variables
   late final List<LivenessDetectionStepItem> steps;
@@ -142,14 +161,6 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     _preInitCallBack();
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _postFrameCallBack());
-    shuffleListLivenessChallenge(
-        list: widget.config.useCustomizedLabel &&
-                widget.config.customizedLabel != null
-            ? customizedLivenessLabel(widget.config.customizedLabel!)
-            : stepLiveness,
-        isSmileLast: widget.config.useCustomizedLabel
-            ? false
-            : widget.shuffleListWithSmileLast);
   }
 
   @override
@@ -165,11 +176,25 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
         isSmileLast: widget.config.useCustomizedLabel
             ? false
             : widget.shuffleListWithSmileLast);
+    if (widget.config.isEnableMaxBrightness) {
+      resetApplicationBrightness();
+    }
     super.dispose();
   }
 
   void _preInitCallBack() {
     _isInfoStepCompleted = !widget.config.startWithInfoScreen;
+     shuffleListLivenessChallenge(
+        list: widget.config.useCustomizedLabel &&
+                widget.config.customizedLabel != null
+            ? customizedLivenessLabel(widget.config.customizedLabel!)
+            : stepLiveness,
+        isSmileLast: widget.config.useCustomizedLabel
+            ? false
+            : widget.shuffleListWithSmileLast);
+    if (widget.config.isEnableMaxBrightness) {
+      setApplicationBrightness(1.0);
+    }
   }
 
   void _postFrameCallBack() async {
@@ -191,6 +216,13 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     if (!widget.config.startWithInfoScreen) {
       _startLiveFeed();
     }
+
+    shuffleListLivenessChallenge(
+        list: widget.config.useCustomizedLabel &&
+                widget.config.customizedLabel != null
+            ? customizedLivenessLabel(widget.config.customizedLabel!)
+            : stepLiveness,
+        isSmileLast: widget.shuffleListWithSmileLast);
   }
 
   void _startLiveFeed() async {
