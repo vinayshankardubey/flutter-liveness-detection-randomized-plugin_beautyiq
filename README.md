@@ -29,7 +29,22 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_liveness_detection_randomized_plugin: ^1.0.4
+  flutter_liveness_detection_randomized_plugin: ^1.0.5
+```
+
+## Customized Steps Label
+You can customized steps label or use certain step only of liveness challenge with this example :
+```
+config: LivenessDetectionConfig(
+customizedLabel: LivenessDetectionLabelModel(
+  blink: '', // add empty string to skip/pass this liveness challenge
+  lookDown: '',
+  lookLeft: '',
+  lookRight: '',
+  lookUp: 'Tengok Atas', // example of customize label name for liveness challenge. it will replace default 'look up'
+  smile: null, // null value to use default label name
+),
+),
 ```
 
 ## Platform Setup

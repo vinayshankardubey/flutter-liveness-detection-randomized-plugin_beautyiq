@@ -64,29 +64,29 @@ class _HomeViewState extends State<HomeView> {
                         .livenessDetection(
                   context: context,
                   config: LivenessDetectionConfig(
-                    durationLivenessVerify:
-                        60, // default duration value is 45 second
-                    showDurationUiText: true,
-                    startWithInfoScreen: true,
-                    useCustomizedLabel: true,
+                    isEnableMaxBrightness: true, // enable disable max brightness when taking face photo
+                    durationLivenessVerify: 60, // default duration value is 45 second
+                    showDurationUiText: false, // show or hide duration remaining when perfoming liveness detection
+                    startWithInfoScreen: true, // show or hide tutorial screen
+                    useCustomizedLabel: false, // set to true value for enable 'customizedLabel', set to false to use default label
                     // provide an empty string if you want to pass the liveness challenge
                     customizedLabel: LivenessDetectionLabelModel(
-                      blink: 'Berkedip',
-                      lookDown: 'Tengok bawah',
-                      lookLeft: 'Tengok kiri',
-                      lookRight: 'Tengok kanan',
-                      lookUp: 'Tengok atas',
-                      smile: 'Senyum',
+                      blink: '', // add empty string to skip/pass this liveness challenge
+                      lookDown: '',
+                      lookLeft: '',
+                      lookRight: '',
+                      lookUp: 'Tengok Atas', // example of customize label name for liveness challenge. it will replace default 'look up'
+                      smile: null, // null value to use default label name
                     ),
                   ),
-                  isEnableSnackBar: true,
-                  shuffleListWithSmileLast: true,
-                  isDarkMode: false,
-                  showCurrentStep: true,
+                  isEnableSnackBar: true, // snackbar to notify either liveness is success or failed
+                  shuffleListWithSmileLast: true, // put 'smile' challenge always at the end of liveness challenge, if `useCustomizedLabel` is true, this automatically set to false
+                  isDarkMode: false, // enable dark/light mode
+                  showCurrentStep: true, // show number current step of liveness
                 );
                 if (mounted) {
                   setState(() {
-                    imgPath = response;
+                    imgPath = response; // result liveness
                   });
                 }
               },
